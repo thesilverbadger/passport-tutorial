@@ -14,15 +14,21 @@ const methodOverride = require("method-override");
 const layout = require("express-layout");
 const bodyParser = require("body-parser");
 
+const mongoose = require("mongoose");
+const url = "mongodb://localhost:27017/passport-demo";
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
 const accountRouter = require("./routes/account.controller");
 const homeRouter = require("./routes/home.controller");
 
 const initialisePassport = require("./passport-config");
 initialisePassport(
     passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-  )
+    //email => users.find(user => user.email === email),
+    //email => findUserByEmail(email),
+    //id => users.find(user => user.id === id)
+    //id => findById(id)
+);
 
 //Global variable for users - replace with DB
 users = [];
@@ -63,7 +69,7 @@ function checkAuthenticated(req, res, next) {
         res.locals.user = req.user;
         return next();
     }
-    
+
     res.redirect("/account/login");
 }
 
