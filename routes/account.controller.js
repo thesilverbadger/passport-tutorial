@@ -6,7 +6,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 
 router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("account/login");
 });
 
 router.post("/login", passport.authenticate("local", {
@@ -21,7 +21,7 @@ router.delete("/logout", (req, res) => {
 });
 
 router.get("/register", (req, res) => {
-    res.render("register");
+    res.render("account/register");
 });
 
 router.post("/register", async (req, res) => {

@@ -42,7 +42,7 @@ app.use("/account", accountRouter);
 app.use(checkAuthenticated);
 
 app.get("/", (req, res) => {
-    res.render("index", { name: req.user.name });
+    res.render("home/index", { name: req.user.name });
 });
 
 //Middleware authentication function
