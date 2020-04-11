@@ -12,6 +12,7 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 
 const accountRouter = require("./routes/account.controller");
+const homeRouter = require("./routes/home.controller");
 
 const initialisePassport = require("./passport-config");
 initialisePassport(
@@ -41,9 +42,7 @@ app.use("/account", accountRouter);
 //Any authenticated routes after this point
 app.use(checkAuthenticated);
 
-app.get("/", (req, res) => {
-    res.render("home/index", { name: req.user.name });
-});
+app.use("/", homeRouter);
 
 //Middleware authentication function
 function checkAuthenticated(req, res, next) {
