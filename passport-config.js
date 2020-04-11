@@ -8,14 +8,14 @@ function initialise(passport, getUserByEmail, getUserById) {
         const user = getUserByEmail(email);
 
         if (user == null) {
-            return done(null, false, { message: "No User" });
+            return done(null, false, { message: "Invalid email or password" });
         }
 
         try {
             if (await bcrypt.compare(password, user.password)) {
                 return done(null, user);
             } else {
-                return done(null, false, { message: "passowrd incorrect" });
+                return done(null, false, { message: "Invalid email or password" });
             }
         } catch (err) {
             done(err);

@@ -1,16 +1,18 @@
 <h1>Login</h1>
 <% if(messages.error) { %>
-    <%= messages.error %>
+    <div class="alert alert-danger" role="alert">
+        <%= messages.error %>
+    </div>
 <% } %>
 <form action="login" method="POST">
-    <div>
+    <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <input class="form-control" type="email" name="email" id="email" required>
     </div>
-    <div>
+    <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
+        <input class="form-control" type="password" name="password" id="password" required>
     </div>
-    <button type="submit">Login</button>
+    <button class="btn btn-primary" type="submit">Login</button>
 </form>
 <a href="/account/register">Register</a>
