@@ -6,7 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 const path = require("path");
 const express = require("express");
 const app = express();
-const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
@@ -14,20 +13,21 @@ const methodOverride = require("method-override");
 const layout = require("express-layout");
 const bodyParser = require("body-parser");
 
+//Mongoose setup
 const mongoose = require("mongoose");
 const url = process.env.MONGO_URL;
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
+//Route config (controllers)
 const accountRouter = require("./routes/account.controller");
 const homeRouter = require("./routes/home.controller");
 const manageRouter = require("./routes/manage.controller");
 
+//Passport setup
 const initialisePassport = require("./passport-config");
 initialisePassport(passport);
 
-//Global variable for users - replace with DB
-users = [];
-
+//view setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
