@@ -15,7 +15,7 @@ const layout = require("express-layout");
 const bodyParser = require("body-parser");
 
 const mongoose = require("mongoose");
-const url = "mongodb://localhost:27017/passport-demo";
+const url = process.env.MONGO_URL;
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const accountRouter = require("./routes/account.controller");
@@ -23,13 +23,7 @@ const homeRouter = require("./routes/home.controller");
 const manageRouter = require("./routes/manage.controller");
 
 const initialisePassport = require("./passport-config");
-initialisePassport(
-    passport,
-    //email => users.find(user => user.email === email),
-    //email => findUserByEmail(email),
-    //id => users.find(user => user.id === id)
-    //id => findById(id)
-);
+initialisePassport(passport);
 
 //Global variable for users - replace with DB
 users = [];
@@ -75,5 +69,5 @@ function checkAuthenticated(req, res, next) {
     res.redirect("/account/login");
 }
 
-app.listen(3000);
-console.log("App running");
+app.listen(process.env.PORT);
+console.log(`App running on ${process.env.PORT}`);
