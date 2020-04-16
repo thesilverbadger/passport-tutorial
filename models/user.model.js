@@ -25,4 +25,4 @@ async function getUserById(id) {
     return await user.findById(id);
 }
 
-module.exports = { user, getUserByEmail, getUserById };
+module.exports = { userModel: user, userFunctions: { getUserByEmail, getUserById } };
