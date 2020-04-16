@@ -20,6 +20,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const accountRouter = require("./routes/account.controller");
 const homeRouter = require("./routes/home.controller");
+const manageRouter = require("./routes/manage.controller");
 
 const initialisePassport = require("./passport-config");
 initialisePassport(
@@ -62,6 +63,7 @@ app.use("/account", accountRouter);
 app.use(checkAuthenticated);
 
 app.use("/", homeRouter);
+app.use("/manage", manageRouter);
 
 //Middleware authentication function
 function checkAuthenticated(req, res, next) {
