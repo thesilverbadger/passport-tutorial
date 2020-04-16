@@ -4,9 +4,10 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
-const User = require("./../models/user.model");
+const { userModel } = require("./../models/user.model");
 
 router.get("/login", (req, res) => {
+    res.locals.user = null;
     res.render("account/login");
 });
 
@@ -22,6 +23,7 @@ router.delete("/logout", (req, res) => {
 });
 
 router.get("/register", (req, res) => {
+    res.locals.user = null;
     res.render("account/register");
 });
 
@@ -29,16 +31,13 @@ router.post("/register", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-        const user = User.create({ name: req.body.name, email: req.body.email, password: hashedPassword });
-        await user.save();
-
+        await userModel.create({ name: req.body.name, email: req.body.email, password: hashedPassword });
+        
         res.redirect("/account/login");
     } catch (err) {
         console.error(err);
         res.redirect("/register");
     }
-
-    console.info(users);
 });
 
 module.exports = router;
