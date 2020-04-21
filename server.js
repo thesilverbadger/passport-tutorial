@@ -1,7 +1,11 @@
 
 if (process.env.NODE_ENV !== 'production') {
+    console.info("Running in development mode");
     require('dotenv').config();
-  }
+} else {
+    console.info("Running in production mode");
+}
+  
 
 const path = require("path");
 const express = require("express");
