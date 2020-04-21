@@ -17,6 +17,15 @@ const methodOverride = require("method-override");
 const layout = require("express-layout");
 const bodyParser = require("body-parser");
 
+//Redis setup - use for session storage
+const redis = require("redis");
+const redisClient = redis.createClient();
+const redisStore = require('connect-redis')(session);
+
+redisClient.on('error', (err) => {
+    console.log('Redis error: ', err);
+  });
+
 //Mongoose setup
 const mongoose = require("mongoose");
 const url = process.env.MONGO_URL;
@@ -45,11 +54,29 @@ app.use(middlewares);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
+
+//*** Old session
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false
+// }));
+
+//*** Session setup - using redis
+// Start a session; we use Redis for the session store.
+// "secret" will be used to create the session ID hash (the cookie id and the redis key value)
+// "name" will show up as your cookie name in the browser
+// "cookie" is provided by default; you can add it to add additional personalized options
+// The "store" ttl is the expiration time for each Redis session ID, in seconds
 app.use(session({
     secret: process.env.SESSION_SECRET,
+    name: 'passport-tutorial',
     resave: false,
-    saveUninitialized: false
-}));
+    saveUninitialized: true,
+    cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+    store: new redisStore({ host: process.env.REDIS_HOST, port: 6379, client: redisClient, ttl: 86400 }),
+  }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
