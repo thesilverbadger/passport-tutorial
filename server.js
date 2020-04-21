@@ -16,6 +16,7 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 const layout = require("express-layout");
 const bodyParser = require("body-parser");
+const os = require('os');
 
 //Redis setup - use for session storage
 console.info(`Redis at ${process.env.REDIS_HOST}`);
@@ -82,6 +83,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
 
+app.use(getMachineName);
+
 //Any pre-authenticated routes here
 app.use("/account", accountRouter);
 
@@ -99,6 +102,11 @@ function checkAuthenticated(req, res, next) {
     }
 
     res.redirect("/account/login");
+}
+
+function getMachineName(req, res, next) {
+    res.locals.machineName = os.hostname();
+    return next();
 }
 
 app.listen(process.env.PORT);
