@@ -18,8 +18,9 @@ const layout = require("express-layout");
 const bodyParser = require("body-parser");
 
 //Redis setup - use for session storage
+console.info(`Redis at ${process.env.REDIS_HOST}`);
 const redis = require("redis");
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({ host: process.env.REDIS_HOST });
 const redisStore = require('connect-redis')(session);
 
 redisClient.on('error', (err) => {
@@ -74,7 +75,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
-    store: new redisStore({ host: process.env.REDIS_HOST, port: 6379, client: redisClient, ttl: 86400 }),
+    store: new redisStore({ host: "192.168.1.214", port: 6379, client: redisClient, ttl: 86400 }),
   }));
 
 app.use(passport.initialize());
