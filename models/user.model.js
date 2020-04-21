@@ -17,12 +17,12 @@ const userSchema = new mongoose.Schema({
 
 const user = mongoose.model("user", userSchema);
 
-async function getUserByEmail(email) {
+user.getUserByEmail = async function (email) {
     return await user.findOne({ email: email })
 }
 
-async function getUserById(id) {
+user.getUserById = async function (id) {
     return await user.findById(id);
 }
 
-module.exports = { userModel: user, userFunctions: { getUserByEmail, getUserById } };
+module.exports = user;

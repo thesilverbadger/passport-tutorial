@@ -6,7 +6,7 @@ function initialise(passport) {
     console.log("Initialising Passport");
 
     const authenticateUser = async (email, password, done) => {
-        const user = await User.userFunctions.getUserByEmail(email);
+        const user = await User.getUserByEmail(email);
 
         if (user == null) {
             return done(null, false, { message: "Invalid email or password" });
@@ -27,7 +27,7 @@ function initialise(passport) {
     passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser));
     passport.serializeUser((user, done) => done(null, user.id));
     passport.deserializeUser(async (id, done) => {
-        const user = await User.userFunctions.getUserById(id);
+        const user = await User.getUserById(id);
         return done(null, user);
     });
 
