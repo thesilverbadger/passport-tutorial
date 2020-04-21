@@ -24,14 +24,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/manage/profile">Profile</a>
                 </li>
-                <li class="nav-item">
-                  <form action="/account/logout?_method=DELETE" method="POST">
-                    <button class="nav-link" type="submit">Logout</button>
-                  </form>
-                </li>
                 <% } %>
               </ul>
             </div>
+            <% if(user != null) { %>
+            <form action="/account/logout?_method=DELETE" method="POST" class="form-inline my-2 my-lg-0">
+              <button class="btn btn-secondary my-2 my-sm-0" type="Logout">Logout</button>
+            </form>
+            <% } %>
           </nav>
         <main class="container">
             <%- body %>
