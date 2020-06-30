@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
-const { userModel } = require("./../models/user.model");
+const userModel = require("./../models/user.model");
 
 router.get("/login", (req, res) => {
     res.locals.user = null;
