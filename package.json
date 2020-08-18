@@ -13,7 +13,7 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "connect-redis": "^4.0.4",
-    "ejs": "^3.1.3",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-flash": "0.0.2",
     "express-layout": "^0.1.0",
